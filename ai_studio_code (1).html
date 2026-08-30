@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海翔民主共和国官方旅游门户 - Democratic Republic of Huoisen</title>
+    <style>
+        /* 复古社会主义工农美学调色板 */
+        :root {
+            --huoi-red: #a31919;
+            --huoi-dark-red: #730e0e;
+            --huoi-gold: #e5a93b;
+            --huoi-gold-light: #fae0a5;
+            --huoi-paper: #f4efe6;
+            --huoi-card-bg: #fbf8f2;
+            --huoi-border: #3b2d23;
+            --huoi-text: #241c18;
+            --huoi-subtext: #5c4e43;
+            --flag-green: #109b38;
+            --flag-yellow: #ffcc00;
+            --flag-blue: #094bb5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Songti SC", "SimSun", "Noto Serif SC", "STSong", "Times New Roman", serif;
+            background-color: var(--huoi-paper);
+            color: var(--huoi-text);
+            line-height: 1.8;
+            background-image: radial-gradient(#ded5c4 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* 顶部通告栏 */
+        .top-bulletin {
+            background-color: var(--huoi-dark-red);
+            color: var(--huoi-gold-light);
+            text-align: center;
+            font-size: 13px;
+            padding: 6px 10px;
+            border-bottom: 2px solid var(--huoi-gold);
+            letter-spacing: 1.5px;
+            font-weight: bold;
+        }
+
+        /* 报头大横幅 */
+        header {
+            background: linear-gradient(180deg, var(--huoi-red) 0%, #7d1212 100%);
+            color: #fff;
+            padding: 24px 20px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--huoi-border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+            position: relative;
+        }
+
+        .header-symbols {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 12px;
+        }
+
+        /* 国旗展示组件 */
+        .flag-box {
+            width: 78px;
+            height: 52px;
+            border: 2px solid var(--huoi-border);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+        }
+        .flag-top {
+            display: flex;
+            height: 50%;
+            width: 100%;
+        }
+        .flag-canton {
+            width: 35%;
+            height: 100%;
+            background-color: var(--flag-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .flag-canton-dragon {
+            position: absolute;
+            width: 84%;
+            height: 84%;
+            border: 1.5px solid #bd1e1e;
+            border-radius: 50%;
+        }
+        .flag-canton-star {
+            color: #d81e1e;
+            font-size: 11px;
+            line-height: 1;
+            z-index: 2;
+        }
+        .flag-green-bar {
+            width: 65%;
+            height: 100%;
+            background-color: var(--flag-green);
+        }
+        .flag-yellow-bar {
+            width: 100%;
+            height: 50%;
+            background-color: var(--flag-yellow);
+        }
+
+        /* 国徽 SVG 图形徽章 */
+        .emblem-svg-container {
+            width: 72px;
+            height: 72px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+        }
+
+        h1.title-zh {
+            font-size: 34px;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 0px #000;
+            color: #fff;
+            margin-bottom: 4px;
+            font-weight: 900;
+        }
+
+        p.title-en {
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: var(--huoi-gold-light);
+            text-transform: uppercase;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        .slogan-banner {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            display: inline-block;
+            padding: 5px 22px;
+            border: 1px dashed var(--huoi-gold);
+            font-size: 13.5px;
+            color: var(--huoi-gold-light);
+        }
+
+        /* 导航栏 */
+        nav {
+            background-color: var(--huoi-paper);
+            border-bottom: 3px double var(--huoi-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 6px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        nav button {
+            background: none;
+            border: 1px solid transparent;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--huoi-border);
+            padding: 8px 18px;
+            cursor: pointer;
+            margin: 2px 4px;
+            transition: all 0.2s ease;
+        }
+
+        nav button:hover, nav button.active {
+            background-color: var(--huoi-red);
+            color: #fff;
+            border: 1px solid var(--huoi-border);
+            box-shadow: 2px 2px 0px var(--huoi-border);
+        }
+
+        /* 主容器 */
+        main {
+            max-width: 1100px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 复古报刊标题栏 */
+        .section-header {
+            text-align: center;
+            border-top: 2px solid var(--huoi-border);
+            border-bottom: 2px solid var(--huoi-border);
+            padding: 10px 0;
+            margin-bottom: 22px;
+            background-color: var(--huoi-card-bg);
+        }
+
+        .section-header h2 {
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: var(--huoi-dark-red);
+        }
+
+        .section-header span {
+            font-size: 12px;
+            color: var(--huoi-subtext);
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        /* 网格卡片 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .retro-card {
+            background-color: var(--huoi-card-bg);
+            border: 2px solid var(--huoi-border);
+            box-shadow: 4px 4px 0px var(--huoi-border);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .retro-card h3 {
+            font-size: 19px;
+            color: var(--huoi-red);
+            border-bottom: 1px solid #dcd4c5;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .retro-card .badge {
+            font-size: 11px;
+            background-color: var(--huoi-gold);
+            color: var(--huoi-border);
+            padding: 2px 6px;
+            font-weight: normal;
+            border: 1px solid var(--huoi-border);
+        }
+
+        .retro-card p {
+            font-size: 14px;
+            color: var(--huoi-text);
+            text-align: justify;
+            margin-bottom: 8px;
+        }
+
+        .retro-card .highlight {
+            background-color: #efe8dc;
+            padding: 6px 10px;
+            font-size: 13px;
+            border-left: 3px solid var(--huoi-red);
+            margin-top: auto;
+            color: var(--huoi-subtext);
+        }
+
+        /* 思想与信仰板块专用 */
+        .ideology-box {
+            background: #fffbf3;
+            border: 3px double var(--huoi-red);
+            padding: 22px;
+            margin-bottom: 24px;
+            box-shadow: 4px 4px 0px rgba(163, 25, 25, 0.15);
+        }
+
+        .ideology-box h3 {
+            color: var(--huoi-red);
+            font-size: 21px;
+            text-align: center;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .quote-banner {
+            font-style: italic;
+            text-align: center;
+            background: #f1e7d8;
+            padding: 10px;
+            margin: 12px 0;
+            border: 1px dashed var(--huoi-border);
+            font-size: 14.5px;
+            font-weight: bold;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--huoi-border);
+            color: #d8cfc4;
+            text-align: center;
+            padding: 25px 15px;
+            margin-top: 40px;
+            border-top: 4px solid var(--huoi-red);
+            font-size: 13px;
+        }
+
+        footer p {
+            margin-bottom: 5px;
+        }
+
+        .footer-stamp {
+            display: inline-block;
+            margin-top: 10px;
+            border: 1px solid var(--huoi-gold);
+            color: var(--huoi-gold);
+            padding: 4px 14px;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部宣传标语 -->
+    <div class="top-bulletin">
+        ★ 在唐严工主义光辉指引下，海翔民主共和国欢迎五洲四海的同志与贵宾！ ★
+    </div>
+
+    <!-- 报头与国旗国徽 -->
+    <header>
+        <div class="header-symbols">
+            <!-- 共和国国旗 -->
+            <div class="flag-box" title="海翔民主共和国国旗">
+                <div class="flag-top">
+                    <div class="flag-canton">
+                        <div class="flag-canton-dragon"></div>
+                        <div class="flag-canton-star">★</div>
+                    </div>
+                    <div class="flag-green-bar"></div>
+                </div>
+                <div class="flag-yellow-bar"></div>
+            </div>
+
+            <!-- 共和国国徽 (SVG 复刻麦穗、齿轮、红星、朝阳海浪与HUOISEN绶带) -->
+            <div class="emblem-svg-container" title="海翔民主共和国国徽">
+                <svg viewBox="0 0 200 200" width="100%" height="100%">
+                    <!-- 齿轮底座 -->
+                    <circle cx="100" cy="100" r="88" fill="#a31919" stroke="#e5a93b" stroke-width="4"/>
+                    <!-- 麦穗环抱外轮廓 -->
+                    <path d="M 30 140 C 15 80 45 35 100 25 C 155 35 185 80 170 140" fill="none" stroke="#e5a93b" stroke-width="12" stroke-dasharray="6,3"/>
+                    <!-- 朝阳与海浪 -->
+                    <path d="M 60 145 Q 100 115 140 145 Z" fill="#e5a93b"/>
+                    <path d="M 50 148 Q 75 142 100 148 T 150 148" fill="none" stroke="#a31919" stroke-width="3"/>
+                    <path d="M 55 154 Q 75 148 100 154 T 145 154" fill="none" stroke="#a31919" stroke-width="3"/>
+                    <!-- 光芒射线 -->
+                    <g stroke="#e5a93b" stroke-width="2">
+                        <line x1="100" y1="100" x2="100" y2="45"/>
+                        <line x1="100" y1="100" x2="70" y2="55"/>
+                        <line x1="100" y1="100" x2="130" y2="55"/>
+                        <line x1="100" y1="100" x2="50" y2="75"/>
+                        <line x1="100" y1="100" x2="150" y2="75"/>
+                        <line x1="100" y1="100" x2="45" y2="105"/>
+                        <line x1="100" y1="100" x2="155" y2="105"/>
+                    </g>
+                    <!-- 中央工农齿轮与红星 -->
+                    <polygon points="100,50 113,80 145,82 120,102 128,132 100,115 72,132 80,102 55,82 87,80" fill="#a31919" stroke="#e5a93b" stroke-width="4"/>
+                    <circle cx="100" cy="95" r="16" fill="#a31919" stroke="#e5a93b" stroke-width="4" stroke-dasharray="7,3"/>
+                    <circle cx="100" cy="95" r="7" fill="#e5a93b"/>
+                    <!-- 顶端小红星 -->
+                    <polygon points="100,15 104,24 114,24 106,30 109,39 100,34 91,39 94,30 86,24 96,24" fill="#e5a93b"/>
+                    <!-- 底部 HUOISEN 红色金边绶带 -->
+                    <rect x="40" y="155" width="120" height="24" fill="#730e0e" stroke="#e5a93b" stroke-width="3" rx="3"/>
+                    <text x="100" y="172" font-family="'Times New Roman', serif" font-weight="900" font-size="14" fill="#fae0a5" text-anchor="middle" letter-spacing="3">HUOISEN</text>
+                </svg>
+            </div>
+        </div>
+
+        <h1 class="title-zh">海翔民主共和国</h1>
+        <p class="title-en">Democratic Republic of Huoisen - National Tourism & Culture Portal</p>
+        <div class="slogan-banner">
+            国家外事与旅游管理总局 监制 · 崇高信仰 · 劳动光荣 · 壮丽山海
+        </div>
+    </header>
+
+    <!-- 复古报刊导航 -->
+    <nav>
+        <button class="active" onclick="switchTab('overview')">共和国概览与信仰</button>
+        <button onclick="switchTab('cities')">重点旅游城市</button>
+        <button onclick="switchTab('monuments')">伟大历史建筑</button>
+        <button onclick="switchTab('ethnic')">本土民族画卷</button>
+        <button onclick="switchTab('guide')">参访纪律与指南</button>
+    </nav>
+
+    <!-- 主体内容 -->
+    <main>
+
+        <!-- 板块 1: 概览与崇高信仰 -->
+        <section id="overview" class="tab-content active">
+            <div class="section-header">
+                <h2>崇高信仰与唐严工主义</h2>
+                <span>THE NOBLE BELIEF & TANGYAN WORKERS' IDEOLOGY</span>
+            </div>
+
+            <div class="ideology-box">
+                <h3>劳动淬炼崇高 · 严谨构筑繁荣</h3>
+                <p>
+                    海翔民主共和国（Democratic Republic of Huoisen）坐落于壮阔的山海交汇之地。在国旗三色（湛蓝天疆、葱郁林原、丰饶金地）与盘龙红星的照耀下，海翔人民将千年古老文明与现代社会主义劳动实践完美交融。
+                </p>
+                <div class="quote-banner">
+                    “以劳动铸就尊严，以严谨克己奉公，以崇高信仰凝聚五族同胞。” —— 唐严工主义核心纲领
+                </div>
+                <p>
+                    <strong>【唐严工主义（Tangyan Workers' Ideology）】</strong>是海翔立国与繁荣的精神指南。它要求将工匠般一丝不苟的科学严谨性，与对集体事业的崇高奉献精神结合。在海翔的城市、农庄与工矿中，劳动不仅是创造财富的源泉，更是全体公民锤炼品德、实现崇高精神升华的必由之路。
+                </p>
+            </div>
+
+            <div class="grid-container">
+                <div class="retro-card">
+                    <h3>国家精神特质 <span class="badge">精神文明</span></h3>
+                    <p>海翔本土秉持敬畏天地、崇尚集体互助与工匠严谨的崇高信仰。全境秩序井然，民风纯朴，崇尚劳动模范。</p>
+                    <div class="highlight">特色观摩：晨间工农升旗集会、劳动模范荣誉长廊。</div>
+                </div>
+                <div class="retro-card">
+                    <h3>红色文化走廊 <span class="badge">经典规划</span></h3>
+                    <p>由国家外事旅游总局统一部署，沿途设立专职涉外招待所与模范参访点，展现共和国波澜壮阔的建设奇迹。</p>
+                    <div class="highlight">推荐干线：首都大麦（胜利宫/文化宫）→ 古都沧京（璃宫/长殿）→ 伊陵 → 永丰谷。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块 2: 重要旅游城市 -->
+        <section id="cities" class="tab-content">
+            <div class="section-header">
+                <h2>共和国重要巡礼城市</h2>
+                <span>KEY TOURISM CITIES & HISTORICAL SITES</span>
+            </div>
+
+            <div class="grid-container">
+                <!-- 首都大麦 -->
+                <div class="retro-card">
+                    <h3>1. 首都 大麦 (Damai) <span class="badge">政治文化心脏</span></h3>
+                    <p><strong>城市特色：</strong>大麦是海翔民主共和国的心脏，金黄的大麦平原环抱着宏伟宽广的社会主义中央大道。这里集中体现了共和国现代政治、文化与工业建设的崇高风貌。</p>
+                    <p><strong>历史建筑与名胜：</strong>首都胜利宫、中央工人文化宫、大麦红星广场、劳动先烈纪念柱。</p>
+                    <div class="highlight">必访地标：首都胜利宫国事殿堂与工人文化宫大礼堂。</div>
+                </div>
+
+                <!-- 沧京 -->
+                <div class="retro-card">
+                    <h3>2. 古典帝都 沧京 (Cangjing) <span class="badge">千年古都·宫阙瑰宝</span></h3>
+                    <p><strong>城市特色：</strong>海翔历史最为悠久的千年古都与传统文化中枢。巍峨的古城墙、整齐的青石街巷与皇家园林完好保留，是海翔古代建筑科学与艺术的最高代表。</p>
+                    <p><strong>历史建筑与名胜：</strong>七彩璃宫、百米长殿建筑群、沧京古城门与护城河。</p>
+                    <div class="highlight">必访地标：沧京璃宫琉璃叠檐与长殿百米通廊。</div>
+                </div>
+
+                <!-- 长岛 -->
+                <div class="retro-card">
+                    <h3>3. 滨海重镇 长岛 (Changdao) <span class="badge">海疆要塞·碧海明珠</span></h3>
+                    <p><strong>城市特色：</strong>扼守共和国东南海防要冲，岛礁如链，拥有壮丽的花岗岩海岸线与深水渔港，海洋渔业发达，海防精神深厚。</p>
+                    <p><strong>历史建筑与名胜：</strong>长岛灯塔哨所、抗侵海防古炮台、滨海族古船坞遗址。</p>
+                    <div class="highlight">特色体验：品尝国营渔业联合厂鲜烤海味与海水日光浴。</div>
+                </div>
+
+                <!-- 伊陵 -->
+                <div class="retro-card">
+                    <h3>4. 历史名城 伊陵 (Yiling) <span class="badge">千年文脉·山水重镇</span></h3>
+                    <p><strong>城市特色：</strong>依山傍水的传统工匠名城，保存着海翔最完好的石板古街、陶艺窑炉与古法冶炼作坊，山水与人文相得益彰。</p>
+                    <p><strong>历史建筑与名胜：</strong>凉水井历史遗址、古伊陵关隘、伊水千夫桥。</p>
+                    <div class="highlight">必访地标：凉水井军民同心甘泉与古法工艺美术社。</div>
+                </div>
+
+                <!-- 永丰谷 -->
+                <div class="retro-card">
+                    <h3>5. 粮仓绿洲 永丰谷 (Yongfeng Valley) <span class="badge">农业典范·田园壮歌</span></h3>
+                    <p><strong>城市特色：</strong>共和国首屈一指的模范集体农庄示范区。灌渠纵横、万亩梯田叠翠，是唐严工主义农业水利工程的卓越丰碑。</p>
+                    <p><strong>历史建筑与名胜：</strong>永丰第一水利总闸、红旗模范集体农庄旧址、农业科技展览馆。</p>
+                    <div class="highlight">季节景观：秋季金色麦浪收割节与现代化农机巡游。</div>
+                </div>
+
+                <!-- 西京 -->
+                <div class="retro-card">
+                    <h3>6. 西陲重镇 西京 (Xijing) <span class="badge">丝路通衢·边关重镇</span></h3>
+                    <p><strong>城市特色：</strong>海翔西部边陲重镇与商贸通衢，见证了多民族交融与边防戍垦的历史。粗犷雄浑的大漠山川与古朴戍堡别具风情。</p>
+                    <p><strong>历史建筑与名胜：</strong>西京古驿道、玄武门古楼、边关戍垦屯田旧址。</p>
+                    <div class="highlight">特色观瞻：登临古关隘远眺大漠长烟与现代绿洲防护林。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块 3: 伟大建筑丰碑 -->
+        <section id="monuments" class="tab-content">
+            <div class="section-header">
+                <h2>共和国标志性建筑丰碑</h2>
+                <span>MONUMENTAL ARCHITECTURES & HISTORIC LANDMARKS</span>
+            </div>
+
+            <div class="grid-container">
+                <!-- 首都胜利宫 -->
+                <div class="retro-card">
+                    <h3>首都胜利宫 <span class="badge">首都大麦</span></h3>
+                    <p>座落于**首都大麦**中央轴线上，是共和国的政治中枢与主权象征。融合了苏式新古典主义的宏伟立柱与海翔本土雕刻艺术，拥有金光璀璨的红星顶楼与高大花岗岩基座。</p>
+                    <div class="highlight">建筑亮点：中央圆顶“工农大团结”巨幅马赛克镶嵌壁画。</div>
+                </div>
+
+                <!-- 工人文化宫 -->
+                <div class="retro-card">
+                    <h3>工人文化宫 <span class="badge">首都大麦</span></h3>
+                    <p>座落于**首都大麦**核心文教区，是劳动者享受高雅艺术、举办群众文艺盛典与劳模表彰的圣地。内设两千人红木大剧场、图书馆与技能展览厅。</p>
+                    <div class="highlight">建筑亮点：大门主立面“劳动创造世界”大型汉白玉浮雕群。</div>
+                </div>
+
+                <!-- 璃宫 -->
+                <div class="retro-card">
+                    <h3>璃宫 (The Glazed Palace) <span class="badge">古都沧京</span></h3>
+                    <p>座落于**古都沧京**御苑核心，海翔古代琉璃建筑工艺的巅峰之作。整座宫殿采用特制七彩琉璃瓦与彩绘斗拱，在阳光映照下流光溢彩、宛如琼楼玉宇。</p>
+                    <div class="highlight">建筑亮点：九层重檐琉璃金顶与飞天盘龙照壁。</div>
+                </div>
+
+                <!-- 长殿 -->
+                <div class="retro-card">
+                    <h3>长殿 (The Long Palace) <span class="badge">古都沧京</span></h3>
+                    <p>座落于**古都沧京**大内中轴，海翔现存进深最长、体量最庞大的木石结构古建筑。通体使用百年红松巨柱与重叠梁架，气势庄严肃穆，见证了海翔民族大融合。</p>
+                    <div class="highlight">建筑亮点：百米通廊巨柱梁架与古代唐严工匠铭文。</div>
+                </div>
+
+                <!-- 凉水井 -->
+                <div class="retro-card">
+                    <h3>凉水井 (Cold Water Well) <span class="badge">名城伊陵</span></h3>
+                    <p>座落于**历史名城伊陵**的百年甘泉遗迹。在艰苦卓绝的革命岁月里，凉水井是互助工农队伍的水源生命线。现扩建为红泉甘露历史纪念公园。</p>
+                    <div class="highlight">建筑亮点：汉白玉古井栏与“军民同心·其利断金”纪念碑。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块 4: 本土民族画卷 -->
+        <section id="ethnic" class="tab-content">
+            <div class="section-header">
+                <h2>多元一体的各民族大家庭</h2>
+                <span>ETHNIC CULTURES & HARMONIOUS PEOPLES</span>
+            </div>
+
+            <div class="grid-container">
+                <!-- 翔族 -->
+                <div class="retro-card">
+                    <h3>翔族 (Huoi / Xiang) <span class="badge">主体民族·山海英杰</span></h3>
+                    <p>海翔主体民族之一，性格刚毅勇猛，崇尚蓝天与翱翔的海鸟。服饰崇尚蓝白相间，精于航海、大型铸造与重工业建设，是唐严工主义的中坚力量。</p>
+                    <div class="highlight">特色民俗：翔羽迎春舞、千人锻造号子。</div>
+                </div>
+
+                <!-- 龙族 -->
+                <div class="retro-card">
+                    <h3>龙族 (Dragon / Long) <span class="badge">灵秀山川·古法匠人</span></h3>
+                    <p>主要分布于中部河谷与沧京、伊陵一带，保留着古老的神龙崇拜。龙族同胞长于玉雕、古法冶炼与传统医药，为共和国留存了灿烂的手工瑰宝。</p>
+                    <div class="highlight">特色民俗：二月二龙腾社火大典、本草香囊节。</div>
+                </div>
+
+                <!-- 汉族 -->
+                <div class="retro-card">
+                    <h3>汉族 (Han) <span class="badge">耕读传家·百工繁兴</span></h3>
+                    <p>自古与海翔各族紧密交融，带来了精耕农业、古典文献与儒雅礼仪。永丰谷的万顷良田与沧京的古典园林，皆凝聚着汉族与各族同胞的辛劳智慧。</p>
+                    <div class="highlight">特色民俗：端午龙舟竞渡、中秋麦丰诗会。</div>
+                </div>
+
+                <!-- 滨海族 -->
+                <div class="retro-card">
+                    <h3>滨海族 (Coastal / Binhai) <span class="badge">弄潮健儿·海疆长城</span></h3>
+                    <p>世代栖居于长岛及沿海港湾，精通潮汐气象。滨海族的贝雕、咸水民谣与抗风榫卯船楼独树一帜，是保卫海疆与发展远洋捕捞的先锋。</p>
+                    <div class="highlight">特色民俗：祭海平安盛典、开洋渔鼓舞。</div>
+                </div>
+
+                <!-- 琉球族 -->
+                <div class="retro-card">
+                    <h3>琉球族 (Ryukyu) <span class="badge">海丝明珠·礼乐之邦</span></h3>
+                    <p>保留着优雅的海岛礼乐文明、红瓦屋脊与三线琴音乐。琉球族同胞待客热情，善于织染、制糖与武道，为海翔增添了绚烂的海洋岛屿风情。</p>
+                    <div class="highlight">特色民俗：三线琴弹唱会、红瓦狮子欢庆舞。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块 5: 访客指南 -->
+        <section id="guide" class="tab-content">
+            <div class="section-header">
+                <h2>外宾参访须知与纪律</h2>
+                <span>VISITOR GUIDELINES & FOREIGN AFFAIRS NOTICE</span>
+            </div>
+
+            <div class="ideology-box">
+                <h3>文明参访 · 遵守秩序 · 共享友谊</h3>
+                <p>海翔民主共和国实行规范严谨的涉外旅游接待制度，请全体入境同志与友好外宾自觉遵守以下准则：</p>
+                <br>
+                <p><strong>一、住宿与餐饮：</strong>外宾统一入住各大城市“国营第一友谊招待所”或“涉外宾馆”；在劳动者食堂就餐请自觉践行“珍惜粮食”准则。</p>
+                <p><strong>二、摄影管理：</strong>首都胜利宫广场、工人文化宫、沧京璃宫与长殿等开放景区均可自由拍照留念；涉及国防海防要塞及特种工业设施请服从随团向导指引。</p>
+                <p><strong>三、货币与消费：</strong>共和国全境推行平价供应体系，使用海翔外汇兑换券或工农银行卡结算，严禁任何形式的强买强卖与小费陋习。</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 页脚 (已更新至 2036 年) -->
+    <footer>
+        <p><strong>海翔民主共和国国家外事与旅游管理总局</strong> 版权所有 © 2026-2036</p>
+        <p>Democratic Republic of Huoisen - All Rights Reserved (Valid thru 2036)</p>
+        <p>官方参考系统：huoisen.simdif.com / huoisengovernment.lovable.app</p>
+        <div class="footer-stamp">劳动者的崇高乐园 · 英雄的海翔</div>
+    </footer>
+
+    <!-- 交互脚本 -->
+    <script>
+        function switchTab(tabId) {
+            // 隐藏所有板块
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // 重置导航按钮状态
+            const buttons = document.querySelectorAll('nav button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // 激活当前板块与按钮
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            // 滚动到正文顶端
+            window.scrollTo({ top: 130, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
